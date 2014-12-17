@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>Welcome to test application using Modus API</h1>
+    
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+   $(document).ready(function() {
+    var frm = $('#movieForm');
+    frm.submit(function (ev) {
+        $.ajax({
+            type: frm.attr('method'),
+            url: frm.attr('action'),
+            data: frm.serialize(),
+            crossDomain: true,
+            success: function (data) {
+                alert('Got response from server!');
+                $('#movieresult').append(JSON.stringify(data)); 
+    
+            }
+        });
+
+        ev.preventDefault();
+    });
+});
+
+</script>
+
+
+
+<form id="upload" action="localhost:3000/api/v1/upload" method="post">
+	<input type="file" name="modusdata">
+	<input type="submit" value="Upload">
+</form>
+<br>
+
+<form id="movieForm" action="http://localhost:3000/api/v1/movie" method="get">
+	<input type="text" name="imdb_id" placeholder="Please enter IMDb ID">
+	<input type="submit" value="Search">
+</form>
+<br>
+<div id="movieresult">
+</div>
+
+
+  </body>
+</html>
