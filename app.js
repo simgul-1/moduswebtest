@@ -9,6 +9,15 @@ var routes = require('./routes/index');
 
 var app = express();
 
+// Needed to access our API from another webpage "Cross Site Requests" (and hopefully mobile apps)
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', '*');
+
+    next();
+}
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

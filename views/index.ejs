@@ -3,13 +3,15 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    
   </head>
   <body>
     <h1>Welcome to test application using Modus API</h1>
     
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
-   $(document).ready(function() {
+  
+  $(document).ready(function() {
     var frm = $('#movieForm');
     frm.submit(function (ev) {
         $.ajax({
@@ -26,16 +28,64 @@
 
         ev.preventDefault();
     });
-});
+  });
 
+
+  $(document).ready(function() {
+    var frm = $('#googleLogin');
+    frm.click(function (ev) {
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:3000/auth/google',
+            crossDomain: true,
+            success: function (data) {
+                alert(JSON.stringify(data));
+            }
+        });
+
+        ev.preventDefault();
+    });
+  });
+
+
+  // FÅ DENNA SKIT O FUNKA??? LÄgga på maxime???
+  $(document).ready(function(){
+    var form = $('#uploadform');
+    form.submit(function(ev) {
+      $.ajax({
+        url: 'http://localhost:3000/api/v1/upload',
+        headers: {
+          "token" : "ya29.4QBkh6IUISo3kbX7nWAS7lPdy5nMA9uW8bz2BM0ZxrD2eRRwtjjjg1-Iwb3FHMgG0Ej1hrKhuGeeIA"
+        },
+        type: 'POST',
+        contentType: 'multipart/form-data', // Set content type to false as jQuery will tell the server its a query string request
+        success: function(data) {
+          alert('success');
+        }
+       
+        
+
+    });
+    ev.preventDefault();
+  
+    })
+    
+  });
+
+  
 </script>
 
 
 
-<form id="upload" action="localhost:3000/api/v1/upload" method="post">
+<form id="uploadform" enctype="multipart/form-data">
 	<input type="file" name="modusdata">
 	<input type="submit" value="Upload">
 </form>
+
+<br>
+
+<button id="googleLogin" >Authenticate with google</button>
+
 <br>
 
 <form id="movieForm" action="http://localhost:3000/api/v1/movie" method="get">
